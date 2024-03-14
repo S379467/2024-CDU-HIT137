@@ -1,14 +1,3 @@
-numbersum,lettersum =0,0
-sentance=str(input("Enter a sentance: "))
-for n in sentance:
-    try: 
-        num=int(n)
-        numbersum=numbersum+1
-    except:
-        if n.isalpha():
-            lettersum=lettersum+1
-print("LETTER", lettersum)
-print("NUMBER", numbersum)
 
 
 quit() #WEEK THREE TUTORIAL ARCHIVE
