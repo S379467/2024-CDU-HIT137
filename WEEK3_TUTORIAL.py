@@ -50,7 +50,6 @@ for n in range(1,6):
     list1.append(n)
     print(list1) #i dont know how to do it...
 #ALTERNATE
-list1=[] #this is not the intended format
 for n in range(1,6):
     for i in range(1, n + 1):
         print(i, end=" ")
