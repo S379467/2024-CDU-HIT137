@@ -9,7 +9,7 @@ if generated_number % 2 == 0:
 n = generated_number
 print("RGB values are altered by", n)
 
-with Image.open("chapter1.jpg") as original:
+with Image.open("chapter1.png") as original:
     original.load()
     original.convert('RGB')
     width, height = original.size
