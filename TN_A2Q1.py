@@ -2,9 +2,25 @@
 
 """QUESTION ONE
 Task 1: extract csv files into a single .txt file"""
-#use f=open(filename, r) and f=open(filename2,w) to combine documents?
 
-#im having issues combining the files when we use the following
+import pandas as pd
+
+def combineCSV():
+    for i in range(1,5):
+        if i == 1:
+            text = pd.read_csv(f"CSV{i}.csv")['SHORT-TEXT']
+            with open("master.txt", 'w') as master:
+                master.write("\n".join(text))
+        else:
+            text = pd.read_csv(f"CSV{i}.csv")['TEXT']
+            with open("master.txt", 'a') as master:
+                master.write("\n")
+                master.write("\n".join(text))
+
+#to activate un-comment code below
+#combineCSV():
+
+
 """
 import pandas as pd
 
