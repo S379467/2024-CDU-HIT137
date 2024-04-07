@@ -17,20 +17,9 @@ def combineCSV():
                 master.write("\n")
                 master.write("\n".join(text))
 
-#to activate un-comment code below
+#to activate def un-comment code below:
+
 #combineCSV():
-
-
-"""
-import pandas as pd
-
-df = pd.read_csv("CSV4.csv")
-text4 = df['TEXT'].to_list
-print(text4)
-"""
-#it creates a series that I don't know how to convert to a txt file.
-#in addition the files are still to large that the processing time is pretty long
-#It seems like there is way too much text to process...
 
 
 """Task 2: Install 
