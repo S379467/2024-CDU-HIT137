@@ -11,7 +11,7 @@ print("RGB values are altered by", n)
 
 with Image.open("chapter1.png") as original:
     original.load()
-    original.convert('RGB')
+    original = original.convert('RGB')
     width, height = original.size
 #opens the original file; changes mode to RGB and finds the image size (in pixels)
 
