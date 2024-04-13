@@ -1,13 +1,11 @@
-#pop any ideas you have in the comments, this summarises Assignment 2Q1
-
-"""QUESTION ONE
-Task 1: extract csv files into a single .txt file"""
-
 import pandas as pd
+from transformers import AutoTokenizer
+tokenizer = AutoTokenizer.from_pretrained("emilyalsentzer/Bio_ClinicalBERT")
 
 def combineCSV():
     for i in range(1,5):
         if i == 1:
+            #CSV1 is the only file with column title 'SHORT-TEXT'
             text = pd.read_csv(f"CSV{i}.csv")['SHORT-TEXT']
             with open("master.txt", 'w') as master:
                 master.write("\n".join(text))
@@ -17,34 +15,45 @@ def combineCSV():
                 master.write("\n")
                 master.write("\n".join(text))
 
-#to activate def un-comment code below:
+def simple_word_counter():
+    global counter
+    counter = dict()
+    with open("master.txt", 'r') as master:
+        for line in master:
+            for word in line.split():
+                word = word.lower()
+                if word in counter:
+                    counter[word] += 1
+                else:
+                    counter[word] = 1
+    return counter
+def biobert_word_counter():
+    global tokens
+    tokens = dict()
+    test = open("master.txt", 'r')
+    for line in test:
+        token_beta = tokenizer.tokenize(line)
+        for word in token_beta:             #attempt to remove subwords and non alpha characters
+            if word.isalpha() == False:
+                continue
+            elif word in tokens:
+                tokens[word] += 1
+            else:
+                tokens[word] = 1
+    return tokens
 
-#combineCSV():
+def sort_to_csv(dict, filename):
+    ordered = sorted(dict.items(), key=lambda x:x[1], reverse=True) #sets it as tuples
+    highest_30 = ordered[:30]
 
-
-"""Task 2: Install 
-    SpaCy – scispaCy – ‘en_core_sci_sm’/’en_ner_bc5cdr_md’).
-    Transformers (Hugging Face)
-    (BioBert)"""
-#https://allenai.github.io/scispacy/
-#https://huggingface.co/docs/transformers/en/installation
-
-#use venv pip install
-
-
-
-
-"""Task 3:
-    3.1: Count words and find top 30 most common, store in csv file
-    #the only way I can think to do this using pythons inbuilt system is to itterate through every word and create a list and/or count of the frequency
-     but the file is so large this seems impractical
+    with open(f"{filename}.csv", 'w') as Top_30:
+        for w, c in highest_30:
+            Top_30.write(f"{w},{c}\n")
     
-    3.2: Use Auto Tokenizer to make a function to count unique tokens in top 30 words"""
-#3.1 seperate each word in txt. and loop that itterates through it and counts frequency? 
-#Any other ideas how to go about it?
-#i don't know how the auto tokenizer will work given that the highest frequency words will be joining words and the headinds of each seciton within TEXT
 
-
+combineCSV()
+sort_to_csv(simple_word_counter(), "simple_top30")
+sort_to_csv(biobert_word_counter(), "biobert_top30")
 
 
 """Task 4: Extract 'drug' and 'diseases' entites in txt. file, compare difference between two models"""
